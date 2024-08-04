@@ -1,4 +1,6 @@
- Activity planner / destination guide in Spain
+*****************************************************************
+ # PHASE III: Activity planner & destination guide in Spain #
+ *****************************************************************
 
  Each destination has many activities
 
@@ -19,3 +21,9 @@ Each activity would have a price, a time duration, and whether or not it needs t
 I'd like to be able to add, update, or delete activities, and I'd like to be able to go back and view my destination list. 
 I'd also like to be able to add, update, and delete destinations. 
 I'd also like to be able to view all the activities at once and be able to select one to see its associated destination.
+
+Blog post on property decorators: https://dev.to/tessmueske/decorator-getters-and-setters-in-python-6cd
+
+Blog post on function decorators: https://dev.to/tessmueske/function-decorators-in-python-55l
+
+Thanks for engaging with my project! 
