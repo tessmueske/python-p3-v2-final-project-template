@@ -4,7 +4,7 @@
 
  *****************************************************************
 
-I'm moving to Spain in October, so I'm thinking it would be fun to do an activities list, organized by destinations! This is for me to use (I am the user) to keep track of activities I want to do once I am in Spain. My two models are Destination and Activity.
+I'm moving to Spain in October, so I'm thinking it would be fun to do an activities list, organized by destinations! This is for me to use (I am the user/client) to keep track of activities I want to do once I am in Spain. My two models are Destination and Activity.
 
 Each destination has many activities (for example, the destination of Alicante has activities of surfing, wine tasting, and hiking), while each activity only has one destination (for example, you can only go surfing in Alicante, not in Granada).  
 
