@@ -10,7 +10,7 @@ Each destination has many activities (for example, the destination of Alicante h
 
 In terms of functionality, I want to be able to create a list of all the destinations I'd like to visit, and then when I select a destination, I'd like to be able to see available activities at that destination. I'd like to be able to view the complete activities list and select it to see its associated destination. I want to be able to add, update, or delete activities or destinations.
 
-For verifications: destinations and activities must be strings. Activities have a price (float), length of time anticipated (integer), and whether or not it needs to be booked in advance (boolean of true/false).
+For verifications: destination and activity names must be strings that are greater than zero characters. Activities have a price (float), length of time anticipated (integer), and whether or not it needs to be booked in advance (boolean of true/false).
 
 Finally, I want the CLI to be aesthetically pleasing to look at and engage with. I want it to be easy to use and relatively simple. 
 
