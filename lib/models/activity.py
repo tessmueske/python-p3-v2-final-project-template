@@ -49,5 +49,33 @@ class Activity:
     @plan_ahead.setter
     def plan_ahead(self, value):
         if not isinstance(value, bool):
-            raise Exception("Response must be either true (for yes) or false (for no)")
+            raise Exception("Response must be either True (for yes) or False (for no)")
         return self._plan_ahead
+
+#Activities:
+
+# Córdoba - Mezquita Cathedral de Cordoba, Alcazar de los Reyes Cristianos
+
+# Alicante - Mercat Central d'Alacant, Guadalest Valley
+
+# Barcelona - Parc Güell, Ciutat Vella (Old City), Barri Gòtic (Gothic Quarter), La Sagrada Família, Candy Darling (queer bar), Antoni Gaudí walking tour
+
+# Granada - La Alhambra, Albaicín (neighborhood), Mirador de San Cristóbal, Catedral de Granada, buy Moroccan and Turkish decor
+
+# Madrid - Fun Fun wine bar, Sala Equis (old cinema turned bar), El Prado Museum, Reina Sofía Museum, Fulanita de Tal (lesbian bar), Almudena Cathedral, Templo de Debod, El Retiro Park
+
+# Valencia - Eat paella, Mercat Central de Valencia, La Lonja de la Seda, Valencia Cathedral, Plaza de la Virgen, Casco Historico
+
+# Seville - Drink orange wine, eat oranges, Plaza de España (it's in Star Wars), Maria Luisa Park, Royal Alcázar, Seville Cathedral, watch Flameno
+
+# Bilbao - Iralabarri neighborhood, La Sinsorga (feminist restaurant), Espacio Open (cultural center), visit Elantxobe (tiny fishing village with one street), Nervión River, Casco Viejo (old neighborhood)
+
+# Toledo - Puente San Martin over the Tagus River, Santa Iglesia Catedral Primada de Toledo, Toledo Historic Center, Monastery of San Juan de los Reyes
+
+# Zaragoza - El Tubo (neighborhood), El Ebro River, La Seo del Salvador, Basilica de Nuestra Senora del Pilar, Palacio de la Aljafería
+
+# Rioja - wine tasing (Rioja is from here), Castle of Clavijo
+
+# Balearic Islands - surfing, explore the beaches, swimming in the sea, tan on the beach, party in Ibiza
+
+# Canary Islands - visit for Carnaval, Parque Nacional de Teide, stargazing, sailing, island hopping, La Tejita (nude beach), try almogrote, take a boat to Playa de Antequera, Mercadillo del Agricultor de Tacoronte (little local market), Lanzarote

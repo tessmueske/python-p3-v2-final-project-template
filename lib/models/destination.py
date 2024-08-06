@@ -20,7 +20,6 @@ class Destination:
 
 # Destinations:
 # Córdoba
-# Málaga
 # Alicante
 # Barcelona
 # Granada
@@ -30,10 +29,6 @@ class Destination:
 # Bilbao
 # Toledo
 # Zaragoza
-# Cádiz
-# Marbella
-# Girona
-# Ibiza
-# Santa Cruz de Tenerife
-# Mallorca
+# Balearic Islands
+# Canary Islands
 # Rioja

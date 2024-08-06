@@ -51,3 +51,8 @@ def delete_activity():
 # Now the dogs are printed out with sequential numbers (not their id’s) and the client can select one using that number.
 
 # Since I got the dogs from the backend using .get_all() and iterated through the list as shown above, if the user wants number 3, I know the user wants the third one in that list and I can just grab it from dogs - but the 3rd dog's index in the list is 2 (because the first item in a list is at index 0).  dogs is a list of dog objects, so if the user says "I pick 3" I show them dogs[number_they_picked - 1] and voila!  I have the dog (an object) they wanted with all its attributes available to me to show them!! 
+
+#???????
+#find activity by price
+#find activity by plan ahead
+#find activity by length of time
