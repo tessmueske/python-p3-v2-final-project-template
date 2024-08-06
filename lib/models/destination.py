@@ -17,3 +17,23 @@ class Destination:
         if len(value) <= 0:
             raise Exception("Destination name must be greater than zero characters.")
         self._name = value
+
+# Destinations:
+# Córdoba
+# Málaga
+# Alicante
+# Barcelona
+# Granada
+# Madrid
+# Valencia
+# Seville
+# Bilbao
+# Toledo
+# Zaragoza
+# Cádiz
+# Marbella
+# Girona
+# Ibiza
+# Santa Cruz de Tenerife
+# Mallorca
+# Rioja
