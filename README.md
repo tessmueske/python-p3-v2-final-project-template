@@ -1,26 +1,20 @@
 *****************************************************************
+
  # PHASE III: Activity planner & destination guide in Spain #
+
  *****************************************************************
 
- Each destination has many activities
+I'm moving to Spain in October, so I'm thinking it would be fun to do an activities list, organized by destinations! This is for me to use (I am the user) to keep track of activities I want to do once I am in Spain. My two models are Destination and Activity.
 
- Each activity has one destination
+Each destination has many activities (for example, the destination of Alicante has activities of surfing, wine tasting, and hiking), while each activity only has one destination (for example, you can only go surfing in Alicante, not in Granada).  
 
- Users can add, update, delete, and get all destinations and activities.
+In terms of functionality, I want to be able to create a list of all the destinations I'd like to visit, and then when I select a destination, I'd like to be able to see available activities at that destination. I'd like to be able to view the complete activities list and select it to see its associated destination. I want to be able to add, update, or delete activities or destinations.
 
- Destinations must be a string
+For verifications: destinations and activities must be strings. Activities have a price (float), length of time anticipated (integer), and whether or not it needs to be booked in advance (boolean of true/false).
 
- Activities must be a string
- Activities have a price (float), length of time anticipated (integer), and whether or not it needs to be booked in advance (boolean of true/false)
+Finally, I want the CLI to be aesthetically pleasing to look at and engage with. I want it to be easy to use and relatively simple. 
 
-I'm moving to Spain in October, so I'm thinking it would be fun to do an activities list, organized by destinations. 
-Each destination has many activities (ie the destination of Alicante has activities of surfing, wine tasting, and hiking), and each activity has only one destination (you can only go surfing in Alicante for example, not in Granada). 
-So the models are Destination and Activity. 
-For functionality, I am thinking that I want to create a list of all the destinations I'd like to visit, and then when I select a destination, I'd like to be able to see available activities at that destination. 
-Each activity would have a price, a time duration, and whether or not it needs to be booked in advance (true/false). 
-I'd like to be able to add, update, or delete activities, and I'd like to be able to go back and view my destination list. 
-I'd also like to be able to add, update, and delete destinations. 
-I'd also like to be able to view all the activities at once and be able to select one to see its associated destination.
+*****************************************************************
 
 Blog post on property decorators: https://dev.to/tessmueske/decorator-getters-and-setters-in-python-6cd
 
