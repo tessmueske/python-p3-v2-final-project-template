@@ -1,7 +1,7 @@
 # lib/cli.py
 
 from helpers import (
-    exit,
+    exit_,
     create_destination,
     list_all_destinations_by_name,
     find_destination_by_name,
@@ -19,7 +19,7 @@ def main():
         menu()
         choice = input("... ")
         if choice == "0":
-            exit()
+            exit_()
         elif choice == "1":
             create_destination()
         elif choice == "2":

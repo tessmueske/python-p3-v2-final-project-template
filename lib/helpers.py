@@ -2,7 +2,7 @@
 from models.activity import Activity
 from models.destination import Destination
 
-def exit():
+def exit_():
     print("thanks for planning! happy travels :)")
     exit()
 
@@ -11,8 +11,8 @@ def create_destination():
 
 def list_all_destinations_by_name():
     print("listing all destinations...")
-    for i, destination in enumerate(destinations, start=1):
-        print(f”{i}.  {destination.name}”)
+    #for i, destination in enumerate(destinations, start = 1):
+    #    print(f”{i}.  {destination.name}”)
 
 def find_destination_by_name():
     print("finding destination...")
@@ -28,8 +28,8 @@ def create_activity():
 
 def list_all_activities_by_name():
     print("listing all activities...")
-    for i, activity in enumerate(activities, start=1):
-        print(f”{i}.  {activity.name}”)
+    #for i, activity in enumerate(activities, start = 1):
+    #    print(f”{i}.  {activity.name}”)
 
 def find_activity_by_name():
     print("finding activity...")
