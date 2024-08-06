@@ -2,15 +2,43 @@
 from models.activity import Activity
 from models.destination import Destination
 
-def helper_1():
-    print("Performing useful function#1.")
-
-
-def exit_program():
-    print("Goodbye!")
+def exit():
+    print("thanks for planning! happy travels :)")
     exit()
 
+def create_destination():
+    print("creating destination...")
 
+def list_all_destinations_by_name():
+    print("listing all destinations...")
+    for i, destination in enumerate(destinations, start=1):
+        print(f”{i}.  {destination.name}”)
+
+def find_destination_by_name():
+    print("finding destination...")
+
+def update_destination():
+    print("updating destination...")
+
+def delete_destination():
+    print("deleting destination...")
+
+def create_activity():
+    print("creating activity...")
+
+def list_all_activities_by_name():
+    print("listing all activities...")
+    for i, activity in enumerate(activities, start=1):
+        print(f”{i}.  {activity.name}”)
+
+def find_activity_by_name():
+    print("finding activity...")
+
+def update_activity():
+    print("updating activity...")
+
+def delete_activity():
+    print("deleting activity...")
 
 # A handy dandy tip is using enumerate to iterate with an index in python!
 # for i, value in enumerate(values, start=1):
