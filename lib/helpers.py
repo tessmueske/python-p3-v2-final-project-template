@@ -15,9 +15,9 @@ def create_destination():
         print("Error creating destination: ", exc)
 
 def list_all_destinations_by_name():
-    destination = Destination.get_all()
-    for destination in destinations:
-        print(destination)
+    """List all destinations sorted by name."""
+    destinations = Destination.get_all()
+    print('\n'.join(destination.name for destination in sorted(destinations, key=lambda d: d.name)))
 
 def find_destination_by_name():
     name = input("Enter the destination's name: ")
@@ -27,7 +27,7 @@ def find_destination_by_name():
 
 def update_destination():
     name = input("Enter the destination's name: ")
-    if destination := destination.find_by_name(name):
+    if (destination := destination.find_by_name(name)):
         try:
             name = input("Enter the destination's new name: ")
             destination.name = name
@@ -37,7 +37,7 @@ def update_destination():
         except Exception as exc:
             print("Error updating destination: ", exc)
     else:
-        print(f'Destination {name} not found')
+        print(f'Destination {name} not found :( Try again?')
 
 def delete_destination():
     name = input("Enter the destination's name: ")
@@ -45,7 +45,7 @@ def delete_destination():
         destination.delete()
         print(f'Destination {name} deleted')
     else:
-        print(f'Destination {name} not found')
+        print(f'Destination {name} not found :( Try again?')
 
 def create_activity():
     name = input("Enter the activity's name: ")
@@ -79,7 +79,7 @@ def find_activity_by_length_of_time():
     length_of_time = input("Enter the activity's anticipated length of time: ")
     activity = Activity.find_by_length_of_time(length_of_time)
     print(activity) if activity else print(
-        f'Activities lasting {length_of_time} hour(s) not found :(')
+        f'Activities lasting {length_of_time} hour(s) not found :( Try again?')
 
 def find_activity_by_planned_ahead():
     planned_ahead = input("Enter whether or not the activity needs to be planned in advance (T/F): ")
@@ -113,8 +113,8 @@ def delete_activity():
         activity.delete()
         print(f'Activity {name} deleted')
     else:
-        print(f'Activity {name} not found')
-        
+        print(f'Activity {name} not found :( Try again?')
+
 # A handy dandy tip is using enumerate to iterate with an index in python!
 # for i, value in enumerate(values, start=1):
 #     		print(i, value)

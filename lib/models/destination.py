@@ -3,12 +3,10 @@ from models.__init__ import CURSOR, CONN
 
 class Destination:
     
-    all = []  
+    all = {} 
 
     def __init__(self, name):
         self.name = name
-        self.id = None
-        Destination.all.append(self)  
 
     @property
     def name(self):
@@ -87,7 +85,7 @@ class Destination:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        Destination.all = [d for d in Destination.all if d.id != self.id]  # Remove instance from the list
+        Destination.all = [d for d in Destination.all if d.id != self.id]
 
         self.id = None
 
@@ -106,7 +104,7 @@ class Destination:
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
-        return cls.instance_from_db(row) if row else None
+        return cls(row[1]) if row else None
 
     def activities(self):
         """Return list of activities associated with the current destination"""

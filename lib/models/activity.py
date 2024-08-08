@@ -4,7 +4,7 @@ from models.destination import Destination #because an activity is owned by a de
 
 class Activity:
     
-    all = []
+    all = {}
 
     def __init__(self, name, price, length_of_time, plan_ahead, destination_name):
         self.name = name
@@ -12,9 +12,7 @@ class Activity:
         self.length_of_time = length_of_time
         self.plan_ahead = plan_ahead
         self.destination_name = destination_name
-        self.id = None
-        Activity.all.append(self)
-
+        
     @property
     def name(self):
         return self._name
