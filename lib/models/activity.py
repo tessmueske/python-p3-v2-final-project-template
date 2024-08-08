@@ -3,13 +3,17 @@ from models.__init__ import CURSOR, CONN
 from models.destination import Destination #because an activity is owned by a destination, we import Destination into the Activity class. 
 
 class Activity:
-    pass
+    
+    all = []
+
     def __init__(self, name, price, length_of_time, plan_ahead, destination_name):
         self.name = name
         self.price = price
         self.length_of_time = length_of_time
         self.plan_ahead = plan_ahead
         self.destination_name = destination_name
+        self.id = None
+        Activity.all.append(self)
 
     @property
     def name(self):

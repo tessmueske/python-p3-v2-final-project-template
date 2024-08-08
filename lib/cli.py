@@ -1,4 +1,6 @@
 # lib/cli.py
+from models.activity import Activity
+from models.destination import Destination
 
 from helpers import (
     exit_,
@@ -13,6 +15,9 @@ from helpers import (
     update_activity,
     delete_activity
 )
+
+Destination.create_table()
+Activity.create_table()
 
 def main():
     while True:

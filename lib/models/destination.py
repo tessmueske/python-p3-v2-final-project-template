@@ -2,9 +2,13 @@
 from models.__init__ import CURSOR, CONN
 
 class Destination:
-    pass
+    
+    all = []  
+
     def __init__(self, name):
         self.name = name
+        self.id = None
+        Destination.all.append(self)  
 
     @property
     def name(self):
@@ -40,8 +44,7 @@ class Destination:
 
     def save(self):
         """ Insert a new row with the name values of the current Destination instance.
-        Update object id attribute using the primary key value of new row.
-        Save the object in local dictionary using table row's PK as dictionary key"""
+        Update object id attribute using the primary key value of new row."""
         sql = """
             INSERT INTO destinations (name)
             VALUES (?)
@@ -51,7 +54,9 @@ class Destination:
         CONN.commit()
 
         self.id = CURSOR.lastrowid
-        type(self).all[self.id] = self
+        # Update the list to include the new instance
+        Destination.all = [d for d in Destination.all if d.id != self.id]  # Remove old instance if exists
+        Destination.all.append(self)
 
     @classmethod
     def create(cls, name):
@@ -72,7 +77,7 @@ class Destination:
 
     def delete(self):
         """Delete the table row corresponding to the current Destination instance,
-        delete the dictionary entry, and reassign id attribute"""
+        delete the instance from the list, and reassign id attribute"""
 
         sql = """
             DELETE FROM destinations
@@ -82,36 +87,29 @@ class Destination:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        del type(self).all[self.id]
+        Destination.all = [d for d in Destination.all if d.id != self.id]  # Remove instance from the list
 
         self.id = None
 
     @classmethod
     def get_all(cls):
-        """Return a list containing a Destination object per row in the table"""
-        sql = """
-            SELECT *
-            FROM destinations
-        """
-
-        rows = CURSOR.execute(sql).fetchall()
-
-        return [cls.instance_from_db(row) for row in rows]
+        """Return a list containing all Destination objects"""
+        return cls.all
 
     @classmethod
     def find_by_name(cls, name):
-        """Return a Destination object corresponding to first table row matching specified name"""
+        """Return a Destination object corresponding to the first table row matching the specified name"""
         sql = """
             SELECT *
             FROM destinations
-            WHERE name is ?
+            WHERE name = ?
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
     def activities(self):
-        """Return list of activities associated with current destination"""
+        """Return list of activities associated with the current destination"""
         from models.activity import Activity
         sql = """
             SELECT * FROM activities
