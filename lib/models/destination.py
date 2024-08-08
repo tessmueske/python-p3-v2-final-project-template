@@ -125,7 +125,6 @@ class Destination:
             Activity.instance_from_db(row) for row in rows
         ]
 
-
 # Destinations:
 # Córdoba
 # Alicante
