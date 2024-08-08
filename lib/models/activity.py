@@ -4,11 +4,12 @@ from models.destination import Destination #because an activity is owned by a de
 
 class Activity:
     pass
-    def __init__(self, name, price, length_of_time, plan_ahead):
+    def __init__(self, name, price, length_of_time, plan_ahead, destination_name):
         self.name = name
         self.price = price
         self.length_of_time = length_of_time
         self.plan_ahead = plan_ahead
+        self.destination_name = destination_name
 
     @property
     def name(self):
@@ -52,6 +53,16 @@ class Activity:
             raise Exception("Response must be either True (for yes) or False (for no)")
         return self._plan_ahead
 
+    @property
+    def destination_name(self):
+        return self._destination_name
+
+    @destination_name.setter
+    def destination_name(self, value):
+        if not isinstance(value, str):
+            raise Exception("Destination name must be only letters of the alphabet")
+        return self._destination_name
+
     @classmethod
     def create_table(cls):
         """ Create a new table to persist the attributes of Activity instances """
@@ -62,8 +73,8 @@ class Activity:
             price FLOAT,
             length_of_time INTEGER,
             plan_ahead BOOLEAN,
-            destination_id INTEGER,
-            FOREIGN KEY (destination_id) REFERENCES destinations(id))
+            destination_name TEXT,
+            FOREIGN KEY (destination_name) REFERENCES destinations(name))
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -78,15 +89,15 @@ class Activity:
         CONN.commit()
 
     def save(self):
-        """ Insert a new row with the name, job title, and destination id values of the current Activity object.
+        """ Insert a new row with the name, job title, and destination name values of the current Activity object.
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-                INSERT INTO activities (name, price, length_of_time, planned_ahead, destination_id)
+                INSERT INTO activities (name, price, length_of_time, planned_ahead, destination_name)
                 VALUES (?, ?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.planned_ahead, self.destination_id))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.planned_ahead, self.destination_name))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -99,7 +110,7 @@ class Activity:
             SET name = ?, price = ?, length_of_time = ? planned_ahead = ?, destination_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.planned_ahead, self.destination_id, self.id))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.planned_ahead, self.destination_name, self.id))
         CONN.commit()
 
     def delete(self):
@@ -119,9 +130,9 @@ class Activity:
         self.id = None
 
     @classmethod
-    def create(cls, name, price, length_of_time, planned_ahead, destination_id):
+    def create(cls, name, price, length_of_time, planned_ahead, destination_name):
         """ Initialize a new Activity instance and save the object to the database """
-        activity = cls(name, price, length_of_time, planned_ahead, destination_id)
+        activity = cls(name, price, length_of_time, planned_ahead, destination_name)
         activity.save()
         return activity
 
@@ -167,6 +178,31 @@ class Activity:
 
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_price(cls, price):
+        """Return Activity object corresponding to first table row matching specified price"""
+        sql = """
+            SELECT *
+            FROM activities
+            WHERE price is ?
+        """
+
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_length_of_time(cls, length_of_time):
+        """Return Activity object corresponding to first table row matching specified length_of_time"""
+        sql = """
+            SELECT *
+            FROM activities
+            WHERE length_of_time is ?
+        """
+
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
 
 #Activities:
 
