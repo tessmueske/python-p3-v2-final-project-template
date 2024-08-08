@@ -39,37 +39,37 @@ class Destination:
         CURSOR.execute(sql)
         CONN.commit()
 
-    # def save(self):
-    #     """ Insert a new row with the name and location values of the current Department instance.
-    #     Update object id attribute using the primary key value of new row.
-    #     Save the object in local dictionary using table row's PK as dictionary key"""
-    #     sql = """
-    #         INSERT INTO departments (name, location)
-    #         VALUES (?, ?)
-    #     """
+    def save(self):
+        """ Insert a new row with the name and location values of the current Destination instance.
+        Update object id attribute using the primary key value of new row.
+        Save the object in local dictionary using table row's PK as dictionary key"""
+        sql = """
+            INSERT INTO destination (name)
+            VALUE (?)
+        """
 
-    #     CURSOR.execute(sql, (self.name, self.location))
-    #     CONN.commit()
+        CURSOR.execute(sql, (self.name))
+        CONN.commit()
 
-    #     self.id = CURSOR.lastrowid
-    #     type(self).all[self.id] = self
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
 
-    # @classmethod
-    # def create(cls, name, location):
-    #     """ Initialize a new Department instance and save the object to the database """
-    #     department = cls(name, location)
-    #     department.save()
-    #     return department
+    @classmethod
+    def create(cls, name):
+        """ Initialize a new Destination instance and save the object to the database """
+        destination = cls(name)
+        destination.save()
+        return destination
 
-    # def update(self):
-    #     """Update the table row corresponding to the current Department instance."""
-    #     sql = """
-    #         UPDATE departments
-    #         SET name = ?, location = ?
-    #         WHERE id = ?
-    #     """
-    #     CURSOR.execute(sql, (self.name, self.location, self.id))
-    #     CONN.commit()
+    def update(self):
+        """Update the table row corresponding to the current Destination instance."""
+        sql = """
+            UPDATE destination
+            SET name = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name))
+        CONN.commit()
 
     # def delete(self):
     #     """Delete the table row corresponding to the current Department instance,

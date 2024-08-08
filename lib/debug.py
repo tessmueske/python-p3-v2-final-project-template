@@ -2,6 +2,8 @@
 # lib/debug.py
 
 from models.__init__ import CONN, CURSOR
+from models.activity import Activity
+from models.destination import Destination
 import ipdb
 
 
