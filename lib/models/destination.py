@@ -24,8 +24,7 @@ class Destination:
         sql = """
             CREATE TABLE IF NOT EXISTS destinations (
             id INTEGER PRIMARY KEY,
-            name TEXT,
-            location TEXT)
+            name TEXT)
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -40,15 +39,15 @@ class Destination:
         CONN.commit()
 
     def save(self):
-        """ Insert a new row with the name and location values of the current Destination instance.
+        """ Insert a new row with the name values of the current Destination instance.
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-            INSERT INTO destination (name)
-            VALUE (?)
+            INSERT INTO destinations (name)
+            VALUES (?)
         """
 
-        CURSOR.execute(sql, (self.name))
+        CURSOR.execute(sql, (self.name,))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -64,11 +63,11 @@ class Destination:
     def update(self):
         """Update the table row corresponding to the current Destination instance."""
         sql = """
-            UPDATE destination
+            UPDATE destinations
             SET name = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name))
+        CURSOR.execute(sql, (self.name, self.id))
         CONN.commit()
 
     def delete(self):
@@ -76,7 +75,7 @@ class Destination:
         delete the dictionary entry, and reassign id attribute"""
 
         sql = """
-            DELETE FROM destination
+            DELETE FROM destinations
             WHERE id = ?
         """
 
@@ -92,7 +91,7 @@ class Destination:
         """Return a list containing a Destination object per row in the table"""
         sql = """
             SELECT *
-            FROM destination
+            FROM destinations
         """
 
         rows = CURSOR.execute(sql).fetchall()
@@ -104,7 +103,7 @@ class Destination:
         """Return a Destination object corresponding to first table row matching specified name"""
         sql = """
             SELECT *
-            FROM destination
+            FROM destinations
             WHERE name is ?
         """
 
@@ -115,10 +114,10 @@ class Destination:
         """Return list of activities associated with current destination"""
         from models.activity import Activity
         sql = """
-            SELECT * FROM activity
-            WHERE destination_id = ?
+            SELECT * FROM activities
+            WHERE destination_name = ?
         """
-        CURSOR.execute(sql, (self.id,),)
+        CURSOR.execute(sql, (self.name,))
 
         rows = CURSOR.fetchall()
         return [

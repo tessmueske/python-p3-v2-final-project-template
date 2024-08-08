@@ -93,11 +93,11 @@ class Activity:
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-                INSERT INTO activities (name, price, length_of_time, planned_ahead, destination_name)
+                INSERT INTO activities (name, price, length_of_time, plan_ahead, destination_name)
                 VALUES (?, ?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.planned_ahead, self.destination_name))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.destination_name))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -107,10 +107,10 @@ class Activity:
         """Update the table row corresponding to the current Activity instance."""
         sql = """
             UPDATE activities
-            SET name = ?, price = ?, length_of_time = ? planned_ahead = ?, destination_id = ?
+            SET name = ?, price = ?, length_of_time = ? plan_ahead = ?, destination_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.planned_ahead, self.destination_name, self.id))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.destination_name, self.id))
         CONN.commit()
 
     def delete(self):
@@ -130,9 +130,9 @@ class Activity:
         self.id = None
 
     @classmethod
-    def create(cls, name, price, length_of_time, planned_ahead, destination_name):
+    def create(cls, name, price, length_of_time, plan_ahead, destination_name):
         """ Initialize a new Activity instance and save the object to the database """
-        activity = cls(name, price, length_of_time, planned_ahead, destination_name)
+        activity = cls(name, price, length_of_time, plan_ahead, destination_name)
         activity.save()
         return activity
 
@@ -147,7 +147,7 @@ class Activity:
             activity.name = row[1]
             activity.price = row[2]
             activity.length_of_time = row[3]
-            activity.planned_ahead = row[4]
+            activity.plan_ahead = row[4]
         else:
             # not in dictionary, create new instance and add to dictionary
             activity = cls(row[1], row[2], row[3], row[4])
