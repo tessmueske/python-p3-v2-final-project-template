@@ -7,7 +7,12 @@ def exit_(): #completed
     exit()
 
 def create_destination():
-    print("creating destination...")
+    name = input("Enter the destination's name: ")
+    try:
+        destination = Destination.create(name)
+        print(f'Success: {destination}')
+    except Exception as exc:
+        print("Error creating destination: ", exc)
 
 def list_all_destinations_by_name():
     print("listing all destinations...")
@@ -15,7 +20,10 @@ def list_all_destinations_by_name():
     #    print(f”{i}.  {destination.name}”)
 
 def find_destination_by_name():
-    print("finding destination...")
+    name = input("Enter the destination's name: ")
+    destination = Destination.find_by_name(name)
+    print(destination) if destionation else print(
+        f'Destination {name} not found :(')
 
 def update_destination():
     print("updating destination...")
@@ -34,6 +42,15 @@ def list_all_activities_by_name():
 def find_activity_by_name():
     print("finding activity...")
 
+def find_activity_by_price():
+    pass
+
+def find_activity_by_length_of_time():
+    pass
+
+def find_activity_by_planned_ahead():
+    pass
+
 def update_activity():
     print("updating activity...")
 
@@ -51,8 +68,3 @@ def delete_activity():
 # Now the dogs are printed out with sequential numbers (not their id’s) and the client can select one using that number.
 
 # Since I got the dogs from the backend using .get_all() and iterated through the list as shown above, if the user wants number 3, I know the user wants the third one in that list and I can just grab it from dogs - but the 3rd dog's index in the list is 2 (because the first item in a list is at index 0).  dogs is a list of dog objects, so if the user says "I pick 3" I show them dogs[number_they_picked - 1] and voila!  I have the dog (an object) they wanted with all its attributes available to me to show them!! 
-
-#???????
-#find activity by price
-#find activity by plan ahead
-#find activity by length of time
