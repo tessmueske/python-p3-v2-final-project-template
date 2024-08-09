@@ -9,7 +9,7 @@ class Activity:
         self.price = price
         self.length_of_time = length_of_time
         self.plan_ahead = plan_ahead
-        self.destination_id = destination.id #user doesn't see this information or supply it
+        self.destination_id = destination_id #user doesn't see this information or supply it
 
     @property
     def name(self):
@@ -51,7 +51,7 @@ class Activity:
     def plan_ahead(self, value):
         if not isinstance(value, bool):
             raise Exception("response must be either True (for yes) or False (for no)")
-        return self._plan_ahead
+        self._plan_ahead = value
 
     @property
     def destination_id(self):
@@ -63,7 +63,7 @@ class Activity:
             self._destination_id = destination_id
         else:
             raise ValueError(
-                "depstination_id must reference a destination in the database")
+                "destination_id must reference a destination in the database")
 
     @classmethod
     def create_table(cls):

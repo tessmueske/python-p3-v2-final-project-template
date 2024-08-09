@@ -55,7 +55,7 @@ def main():
             print("\n .·:*¨ ¨*:·. \n invalid choice :( select something else? \n .·:*¨ ¨*:·. \n ")
 
 def menu():
-    print("\n .·:*¨ ¨*:·.\n.·:*¨ ¨*:·. \n\n please select an option! \n")
+    print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! \n")
     print("0. exit \n")
     print("1. create a destination \n")
     print("2. list all destinations by name \n")
@@ -68,7 +68,7 @@ def menu():
     print("9. update an activity \n")
     print("10. delete an activity \n")
     print("11. list one destination and all its activities \n")
-    print("11. list all destinations and all their activities \n\n .·:*¨ ¨*:·.\n.·:*¨ ¨*:·. \n ")
+    print("11. list all destinations and all their activities \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n ")
 
 if __name__ == "__main__":
     main()

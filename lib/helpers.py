@@ -5,13 +5,13 @@ from models.destination import Destination
 #COMPLETED
 def exit_():
     print(
-        " \n˚ ༘♡ ⋆｡˚\n thanks for planning! happy travels :) \n˚ ༘♡ ⋆｡˚ \n"
+        " \n˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚\n thanks for planning! happy travels :) \n˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚\n"
         )
     exit()
 
 #COMPLETED
 def create_destination():
-    name = input("\n\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name! \n \n *:･ﾟ✧*:･ﾟ \n\n")
+    name = input("\n\nenter the destination's name! ")
     try:
         destination = Destination.create(name)
         print('\n\n ✧･ﾟ: *✧･ﾟ:* \n\n success!\n ✧･ﾟ: *✧･ﾟ:* \n\n')
@@ -26,44 +26,44 @@ def list_destinations_by_name():
 
 #COMPLETED
 def find_destination_by_name():
-    name = input("\n\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name! \n \n *:･ﾟ✧*:･ﾟ \n\n")
+    name = input("\n\nenter the destination's name! ")
     destination = Destination.find_by_name(name)
     print(destination) if destination else print(
         f'\ndestination {name} not found :(\n')
 
 #COMPLETED
 def update_destination():
-    name = input("\n\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name! \n \n *:･ﾟ✧*:･ﾟ \n\n")
+    name = input("\n\n enter the destination's name! ")
     
     if (destination := Destination.find_by_name(name)):
-        new_name = input("\n\n -ˋˏ✄┈┈┈┈ \n \n enter the new name! \n \n -ˋˏ✄┈┈┈┈ \n\n")
+        new_name = input("\n\n enter the new name! ")
         destination.name = new_name
         destination.update()
-        print(f"\n\n updated destination to {destination.name}! \n\n ‧͙⁺˚*･༓☾ \n\n")
+        print(f"\n\n ✧･ﾟ: *✧･ﾟ:* \n\n updated destination to {destination.name}! \n\n✧･ﾟ: *✧･ﾟ:* \n\n")
     else:
-        print("\n\ndestination not found :( try again?\n\n")
+        print("\n\n destination not found :( try again?\n\n")
 
 #COMPLETED
 def delete_destination():
-    name = input("\n\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name! \n \n *:･ﾟ✧*:･ﾟ \n\n")
+    name = input("\n\nenter the destination's name! \n\n")
     if destination := Destination.find_by_name(name):
         destination.delete()
-        print('\n\n ⁎̩͙ ⁑̩͙̩͙ ⁂̩̩͙͙ \n\n deleted! \n\n ⁎̩͙ ⁑̩͙̩͙ ⁂̩̩͙͙ \n\n')
+        print('\n\n deleted! \n\n')
     else:
-        print(f'\n\n ╔═*.·:·.✧ ✦ ✧.·:·.*═╗ \n\n destination {name} not found :( try again? \n\n ╚═*.·:·.✧ ✦ ✧.·:·.*═╝ \n\n')
+        print(f'\n\n destination {name} not found :( try again? \n\n')
 
 ##########################################
 
 def create_activity():
     name = input("enter the activity's name! ")
     price = input("enter the activity's price! ")
-    length_of_time = input("enter the activity's length of time in estimated whole hours!")
-    plan_ahead = input("enter whether or not the activity needs to be planned in advance by entering either True (for yes) or False (for no)!")
+    length_of_time = input("enter the activity's length of time in estimated whole hours! ")
+    plan_ahead = input("enter whether or not the activity needs to be planned in advance by entering either True (for yes) or False (for no)! ")
     try:
         activity = Activity.create(name, float(price), int(length_of_time), bool(plan_ahead))
         print('success!')
     except Exception as exc:
-        print("error creating activity :() ", exc)
+        print("error creating activity :( ", exc)
 
 def list_all_activities_by_name():
     activity = Activity.get_all()
@@ -101,8 +101,8 @@ def update_activity():
             activity.name = name
             price = input("enter the activity's new price! ")
             activity.price = price
-            length_of_time = input("enter the activity's new anticipated length of time, in whole hours!")
-            plan_ahead = input("does the activity needs to be planned in advance? (True = yes, False = no)")
+            length_of_time = input("enter the activity's new anticipated length of time, in whole hours! ")
+            plan_ahead = input("does the activity needs to be planned in advance? (True = yes, False = no) ")
             destination_name = input("enter the activity's destination! ")
             activity.destination_name = destination_name
 
