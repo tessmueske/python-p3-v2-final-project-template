@@ -69,20 +69,21 @@ class Activity:
     def create_table(cls):
         """Create a new table to persist the attributes of Activity instances"""
         sql = """
-            CREATE TABLE IF NOT EXISTS activities (
-                id INTEGER PRIMARY KEY,
-                name TEXT,
-                price FLOAT,
-                length_of_time INTEGER,
-                plan_ahead BOOLEAN,
-                destination_id INTEGER,
-                FOREIGN KEY (destination_id) REFERENCES destinations(id))
-            )
+        CREATE TABLE IF NOT EXISTS activities (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        price FLOAT,
+        length_of_time INTEGER,
+        plan_ahead BOOLEAN,
+        destination_id INTEGER,
+        FOREIGN KEY (destination_id) REFERENCES destinations(id)
+        )
         """
         CURSOR.execute(sql)
         CONN.commit()
 
-     @classmethod
+
+    @classmethod
     def drop_table(cls):
         """ Drop the table that persists Activity instances """
         sql = """

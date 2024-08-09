@@ -2,6 +2,8 @@
 from models.__init__ import CURSOR, CONN
 
 class Destination:
+
+    all = {}
     
     def __init__(self, name):
         self.name = name
@@ -17,6 +19,12 @@ class Destination:
         if len(value) <= 0:
             raise Exception("Destination name must be greater than zero characters.")
         self._name = value
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f"destination(name = '{self.name}')"
     
     @classmethod
     def create_table(cls):
@@ -46,12 +54,12 @@ class Destination:
             INSERT INTO destinations (name)
             VALUES (?)
         """
-
-        CURSOR.execute(sql, (self.name))
+        CURSOR.execute(sql, (self.name,))  # Note the trailing comma to ensure it's a tuple
         CONN.commit()
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
 
     @classmethod
     def create(cls, name):
@@ -63,14 +71,14 @@ class Destination:
     def update(self):
         """Update the table row corresponding to the current Destination instance."""
         sql = """
-            UPDATE departments
+            UPDATE destinations
             SET name = ?
             WHERE id = ?
         """
         CURSOR.execute(sql, (self.name, self.id))
         CONN.commit()
 
-     def delete(self):
+    def delete(self):
         """Delete the table row corresponding to the current Destination instance,
         delete the dictionary entry, and reassign id attribute"""
 

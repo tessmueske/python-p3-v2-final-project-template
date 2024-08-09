@@ -5,7 +5,7 @@ from models.destination import Destination
 from helpers import (
     exit_,
     create_destination,
-    list_all_destinations_by_name,
+    list_destinations_by_name,
     find_destination_by_name,
     update_destination,
     delete_destination,
@@ -28,7 +28,7 @@ def main():
         elif choice == "1":
             create_destination()
         elif choice == "2":
-            list_all_destinations_by_name()
+            list_destinations_by_name()
         elif choice == "3":
             find_destination_by_name()
         elif choice == "4":

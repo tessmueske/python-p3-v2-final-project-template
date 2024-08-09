@@ -4,49 +4,53 @@ from models.destination import Destination
 
 #COMPLETED
 def exit_():
-    print("thanks for planning! happy travels :)")
+    print(
+        " ˚ ༘♡ ⋆｡˚thanks for planning! happy travels :) ˚ ༘♡ ⋆｡˚"
+        )
     exit()
 
+#COMPLETED
 def create_destination():
-    name = input("enter the destination's name: ")
+    name = input("\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name: \n \n *:･ﾟ✧*:･ﾟ \n")
     try:
         destination = Destination.create(name)
-        print('success!')
+        print('\n ✧･ﾟ: *✧･ﾟ:* \n success!\n ✧･ﾟ: *✧･ﾟ:* \n')
     except Exception as exc:
-        print("error creating destination! ", exc)
+        print("\nerror creating destination ✎ \n", exc)
 
-def list_all_destinations_by_name():
-    """List all destinations sorted by name."""
+#COMPLETED
+def list_destinations_by_name():
     destinations = Destination.get_all()
-    print('\n'.join(destination.name for destination in sorted(destinations, key=lambda d: d.name)))
+    for destination in destinations:
+        print(destination)
 
+#COMPLETED
 def find_destination_by_name():
-    name = input("enter the destination's name: ")
+    name = input("\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name: \n \n *:･ﾟ✧*:･ﾟ \n")
     destination = Destination.find_by_name(name)
     print(destination) if destination else print(
-        f'destination {name} not found :(')
+        f'\ndestination {name} not found :(\n')
 
+#COMPLETED
 def update_destination():
-    name = input("enter the destination's name: ")
-    if (destination := destination.find_by_name(name)):
-        try:
-            name = input("enter the destination's new name: ")
-            destination.name = name
-
-            destination.update()
-            print('success!')
-        except Exception as exc:
-            print("error updating destination! ", exc)
+    name = input("\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name: \n \n *:･ﾟ✧*:･ﾟ \n")
+    
+    if (destination := Destination.find_by_name(name)):
+        new_name = input("\n -ˋˏ✄┈┈┈┈ \n \n enter the new name: \n \n -ˋˏ✄┈┈┈┈ \n")
+        destination.name = new_name
+        destination.update()
+        print(f"\nupdated destination to {destination.name}! \n ‧͙⁺˚*･༓☾ \n")
     else:
-        print(f'destination {name} not found :( try again?')
+        print("\ndestination not found :( try again?\n")
 
+#COMPLETED
 def delete_destination():
-    name = input("enter the destination's name: ")
+    name = input("\n *:･ﾟ✧*:･ﾟ \n \n enter the destination's name: \n \n *:･ﾟ✧*:･ﾟ \n")
     if destination := Destination.find_by_name(name):
         destination.delete()
-        print('deleted!')
+        print('\n ⁎̩͙ ⁑̩͙̩͙ ⁂̩̩͙͙ \n deleted! \n ⁎̩͙ ⁑̩͙̩͙ ⁂̩̩͙͙ \n')
     else:
-        print(f'destination {name} not found :( try again?')
+        print(f'\n ╔═*.·:·.✧ ✦ ✧.·:·.*═╗ \n destination {name} not found :( try again? \n ╚═*.·:·.✧ ✦ ✧.·:·.*═╝ \n')
 
 ##########################################
 
