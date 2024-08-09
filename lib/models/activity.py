@@ -4,15 +4,13 @@ from models.destination import Destination #because an activity is owned by a de
 
 class Activity:
     
-    all = {}
-
-    def __init__(self, name, price, length_of_time, plan_ahead, destination_name):
+    def __init__(self, name, price, length_of_time, plan_ahead, destination_id):
         self.name = name
         self.price = price
         self.length_of_time = length_of_time
         self.plan_ahead = plan_ahead
-        self.destination_name = destination_name
-        
+        self.destination_id = destination.id #user doesn't see this information or supply it
+
     @property
     def name(self):
         return self._name
@@ -20,9 +18,9 @@ class Activity:
     @name.setter
     def name(self, value):
         if not isinstance(value, str):
-            raise Exception("Activity name must only have letters.")
+            raise Exception("activity name must only have letters.")
         if len(value) <= 0:
-            raise Exception("Activity name must be greater than zero characters.")
+            raise Exception("activity name must be greater than zero characters.")
         self._name = value
 
     @property
@@ -32,7 +30,7 @@ class Activity:
     @price.setter
     def price(self, value):
         if not isinstance(value, float):
-            raise Exception("Activity price must follow this format: $0.00")
+            raise Exception("activity price must follow this format: $0.00")
         self._price = value
 
     @property
@@ -42,7 +40,7 @@ class Activity:
     @length_of_time.setter
     def length_of_time(self, value):
         if not isinstance(value, int):
-            raise Exception("Activity's time length must be a whole number represented in hours (ie 2)")
+            raise Exception("activity's time length must be a whole number represented in hours (ie 2)")
         self._length_of_time = value
     
     @property
@@ -52,7 +50,7 @@ class Activity:
     @plan_ahead.setter
     def plan_ahead(self, value):
         if not isinstance(value, bool):
-            raise Exception("Response must be either True (for yes) or False (for no)")
+            raise Exception("response must be either True (for yes) or False (for no)")
         return self._plan_ahead
 
     @property
@@ -62,7 +60,7 @@ class Activity:
     @destination_name.setter
     def destination_name(self, value):
         if not isinstance(value, str):
-            raise Exception("Destination name must be only letters of the alphabet")
+            raise Exception("destination name must be only letters of the alphabet")
         return self._destination_name
 
     @classmethod
@@ -76,7 +74,7 @@ class Activity:
             length_of_time INTEGER,
             plan_ahead BOOLEAN,
             destination_name TEXT,
-            FOREIGN KEY (destination_name) REFERENCES destinations(name))
+            FOREIGN KEY (destination.id) REFERENCES destinations(name))
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -95,11 +93,11 @@ class Activity:
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-                INSERT INTO activities (name, price, length_of_time, plan_ahead, destination_name)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO activities (name, price, length_of_time, plan_ahead)
+                VALUES (?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.destination_name))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.destination_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -109,10 +107,10 @@ class Activity:
         """Update the table row corresponding to the current Activity instance."""
         sql = """
             UPDATE activities
-            SET name = ?, price = ?, length_of_time = ? plan_ahead = ?, destination_id = ?
+            SET name = ?, price = ?, length_of_time = ? plan_ahead = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.destination_name, self.id))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead self.id))
         CONN.commit()
 
     def delete(self):
@@ -132,9 +130,9 @@ class Activity:
         self.id = None
 
     @classmethod
-    def create(cls, name, price, length_of_time, plan_ahead, destination_name):
+    def create(cls, name, price, length_of_time, plan_ahead):
         """ Initialize a new Activity instance and save the object to the database """
-        activity = cls(name, price, length_of_time, plan_ahead, destination_name)
+        activity = cls(name, price, length_of_time, plan_ahead)
         activity.save()
         return activity
 
@@ -142,16 +140,13 @@ class Activity:
     def instance_from_db(cls, row):
         """Return an Activity object having the attribute values from the table row."""
 
-        # Check the dictionary for  existing instance using the row's primary key
         activity = cls.all.get(row[0])
         if activity:
-            # ensure attributes match row values in case local instance was modified
             activity.name = row[1]
             activity.price = row[2]
             activity.length_of_time = row[3]
             activity.plan_ahead = row[4]
         else:
-            # not in dictionary, create new instance and add to dictionary
             activity = cls(row[1], row[2], row[3], row[4])
             activity.id = row[0]
             cls.all[activity.id] = activity
@@ -168,6 +163,18 @@ class Activity:
         rows = CURSOR.execute(sql).fetchall()
 
         return [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def find_by_id(cls, id):
+        """Return Activity object corresponding to the table row matching the specified primary key"""
+        sql = """
+            SELECT *
+            FROM activities
+            WHERE id = ?
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
 
     @classmethod
     def find_by_name(cls, name):
