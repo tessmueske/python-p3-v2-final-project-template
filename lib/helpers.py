@@ -2,7 +2,8 @@
 from models.activity import Activity
 from models.destination import Destination
 
-def exit_(): #completed
+#COMPLETED
+def exit_():
     print("thanks for planning! happy travels :)")
     exit()
 

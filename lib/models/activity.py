@@ -65,16 +65,17 @@ class Activity:
 
     @classmethod
     def create_table(cls):
-        """ Create a new table to persist the attributes of Activity instances """
+        """Create a new table to persist the attributes of Activity instances"""
         sql = """
             CREATE TABLE IF NOT EXISTS activities (
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            price FLOAT,
-            length_of_time INTEGER,
-            plan_ahead BOOLEAN,
-            destination_name TEXT,
-            FOREIGN KEY (destination.id) REFERENCES destinations(name))
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                price FLOAT,
+                length_of_time INTEGER,
+                plan_ahead BOOLEAN,
+                destination_id INTEGER,
+                FOREIGN KEY (destination_id) REFERENCES destinations(id)
+            )
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -110,7 +111,7 @@ class Activity:
             SET name = ?, price = ?, length_of_time = ? plan_ahead = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead self.id))
+        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.id))
         CONN.commit()
 
     def delete(self):

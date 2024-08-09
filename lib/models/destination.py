@@ -39,20 +39,19 @@ class Destination:
         CONN.commit()
 
     def save(self):
-        """ Insert a new row with the name values of the current Destination instance.
-        Update object id attribute using the primary key value of new row."""
+        """ Insert a new row with the name and location values of the current Destination instance.
+        Update object id attribute using the primary key value of new row.
+        Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
             INSERT INTO destinations (name)
             VALUES (?)
         """
 
-        CURSOR.execute(sql, (self.name,))
+        CURSOR.execute(sql, (self.name))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
-        # Update the list to include the new instance
-        Destination.all = [d for d in Destination.all if d.id != self.id]  # Remove old instance if exists
-        Destination.all.append(self)
+        type(self).all[self.id] = self
 
     @classmethod
     def create(cls, name):
@@ -64,16 +63,16 @@ class Destination:
     def update(self):
         """Update the table row corresponding to the current Destination instance."""
         sql = """
-            UPDATE destinations
+            UPDATE departments
             SET name = ?
             WHERE id = ?
         """
         CURSOR.execute(sql, (self.name, self.id))
         CONN.commit()
 
-    def delete(self):
+     def delete(self):
         """Delete the table row corresponding to the current Destination instance,
-        delete the instance from the list, and reassign id attribute"""
+        delete the dictionary entry, and reassign id attribute"""
 
         sql = """
             DELETE FROM destinations
@@ -83,14 +82,39 @@ class Destination:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        Destination.all = [d for d in Destination.all if d.id != self.id]
+        # Delete the dictionary entry using id as the key
+        del type(self).all[self.id]
 
+        # Set the id to None
         self.id = None
 
     @classmethod
+    def instance_from_db(cls, row):
+        """Return a Destination object having the attribute values from the table row."""
+
+        # Check the dictionary for an existing instance using the row's primary key
+        destination = cls.all.get(row[0])
+        if destination:
+            # ensure attributes match row values in case local instance was modified
+            destination.name = row[1]
+        else:
+            # not in dictionary, create new instance and add to dictionary
+            destination = cls(row[1])
+            destination.id = row[0]
+            cls.all[destination.id] = destination
+        return destination
+
+    @classmethod
     def get_all(cls):
-        """Return a list containing all Destination objects"""
-        return Destination.all
+        """Return a list containing a Destination object per row in the table"""
+        sql = """
+            SELECT *
+            FROM destinations
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
     def find_by_id(cls, id):
@@ -114,28 +138,28 @@ class Destination:
 
     @classmethod
     def find_by_name(cls, name):
-        """Return a Destination object corresponding to the first table row matching the specified name"""
+        """Return a Destination object corresponding to first table row matching specified name"""
         sql = """
             SELECT *
             FROM destinations
-            WHERE name = ?
+            WHERE name is ?
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
-        return cls(row[1]) if row else None
+        return cls.instance_from_db(row) if row else None
 
     def activities(self):
-        """Return list of activities associated with the current destination"""
+        """Return list of activities associated with current destination"""
         from models.activity import Activity
         sql = """
             SELECT * FROM activities
-            WHERE destination_name = ?
+            WHERE destination_id = ?
         """
-        CURSOR.execute(sql, (self.name,))
+        CURSOR.execute(sql, (self.id,),)
 
         rows = CURSOR.fetchall()
         return [
-            Activity.instance_from_db(row) for row in rows
+            Employee.instance_from_db(row) for row in rows
         ]
 
 # Destinations:
