@@ -3,15 +3,14 @@ from models.__init__ import CURSOR, CONN
 from models.destination import Destination #because an activity is owned by a destination, we import Destination into the Activity class. 
 
 class Activity:
-
-    all = {} #dictionary of objects saved to the database
     
-    def __init__(self, name, price, length_of_time, plan_ahead, destination_id):
+    def __init__(self, name, price, length_of_time, plan_ahead, destination_id, id = None):
+        self.id = id
         self.name = name
         self.price = price
         self.length_of_time = length_of_time
         self.plan_ahead = plan_ahead
-        self.destination_id = destination_id #user doesn't see this information or supply it
+        self.destination_id = destination_id
 
     @property
     def name(self):
@@ -32,7 +31,7 @@ class Activity:
     @price.setter
     def price(self, value):
         if not isinstance(value, float):
-            raise Exception("activity price must follow this format: $0.00")
+            raise Exception("activity price must be look like this: $0.00")
         self._price = value
 
     @property
@@ -102,7 +101,7 @@ class Activity:
                 VALUES (?, ?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead, self.destination_id))
+        CURSOR.execute(sql, (self.name, float(self.price), int(self.length_of_time), bool(self.plan_ahead), self.destination_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -140,7 +139,7 @@ class Activity:
     @classmethod
     def create(cls, name, price, length_of_time, plan_ahead, destination_id):
         """ Initialize a new Activity instance and save the object to the database """
-        activity = cls(name, price, length_of_time, plan_ahead, destination_id)
+        activity = cls(name, float(price), int(length_of_time), bool(plan_ahead), destination_id)
         activity.save()
         return activity
 

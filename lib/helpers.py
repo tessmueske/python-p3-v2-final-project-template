@@ -59,15 +59,16 @@ def create_activity():
     price = input("enter the activity's price! ")
     length_of_time = input("enter the activity's length of time in estimated whole hours! ")
     plan_ahead = input("enter whether or not the activity needs to be planned in advance by entering either True (for yes) or False (for no)! ")
+    destination_name = input("enter the name of the destination for this activity! ")
     try:
-        activity = Activity.create(name, float(price), int(length_of_time), bool(plan_ahead))
+        activity = Activity.create(name, price, length_of_time, plan_ahead, destination_name)
         print('success!')
     except Exception as exc:
         print("error creating activity :( ", exc)
 
 def list_all_activities_by_name():
     activity = Activity.get_all()
-    for activity in Activity:
+    for activity in activities:
         print(activity)
 
 def find_activity_by_name():
