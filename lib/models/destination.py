@@ -5,8 +5,9 @@ class Destination:
 
     all = {}
     
-    def __init__(self, name):
+    def __init__(self, name, id=None):
         self.name = name
+        self.id = id
 
     @property
     def name(self):
@@ -167,7 +168,7 @@ class Destination:
 
         rows = CURSOR.fetchall()
         return [
-            Employee.instance_from_db(row) for row in rows
+            Activity.instance_from_db(row) for row in rows
         ]
 
 # Destinations:

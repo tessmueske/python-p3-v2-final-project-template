@@ -3,6 +3,8 @@ from models.__init__ import CURSOR, CONN
 from models.destination import Destination #because an activity is owned by a destination, we import Destination into the Activity class. 
 
 class Activity:
+
+    all = {} #dictionary of objects saved to the database
     
     def __init__(self, name, price, length_of_time, plan_ahead, destination_id):
         self.name = name
@@ -81,7 +83,6 @@ class Activity:
         """
         CURSOR.execute(sql)
         CONN.commit()
-
 
     @classmethod
     def drop_table(cls):
