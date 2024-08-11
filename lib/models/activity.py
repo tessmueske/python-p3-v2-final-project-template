@@ -11,7 +11,7 @@ class Activity:
         self.name = name
         self.price = price
         self.length_of_time = length_of_time
-        self.plan_ahead = plan_ahead
+        self.plan_ahead = str(plan_ahead)
         self.destination_id = destination_id
 
     @property
@@ -33,7 +33,7 @@ class Activity:
     @price.setter
     def price(self, value):
         if not isinstance(value, float):
-            raise Exception("activity price must be look like this: $0.00")
+            raise Exception("activity price must be formatted like this: $0.00.")
         self._price = value
 
     @property
@@ -43,19 +43,18 @@ class Activity:
     @length_of_time.setter
     def length_of_time(self, value):
         if not isinstance(value, int):
-            raise Exception("activity's time length must be a whole number represented in hours (ie 2)")
+            raise Exception("activity's time length must be a whole number represented in hours (ie 2).")
         self._length_of_time = value
-    
+
     @property
+    def plan_ahead(self):
+        return self._plan_ahead
+
+    @plan_ahead.setter
     def plan_ahead(self, value):
-        if isinstance(value, bool):
-            self._plan_ahead = value
-        elif value in ["yes", "true"]:
-            self._plan_ahead = True
-        elif value in ["no", "false"]:
-            self._plan_ahead = False
-        else:
-            raise Exception('response must be either "yes", "true", "no", or "false"')
+        if not isinstance(value, str):
+            raise Exception("Plan ahead must be a string.")
+        self._plan_ahead = value
 
     @property
     def destination_id(self):
@@ -67,7 +66,22 @@ class Activity:
             self._destination_id = destination_id
         else:
             raise ValueError(
-                "destination_id must reference a destination in the database")
+                "destination_id must reference a destination in the database.")
+
+    def __str__(self):
+        return (f"name: '{self.name}',\n "
+                f"price: {self.price},\n "
+                f"length of time: {self.length_of_time} hours,\n "
+                f"plan ahead?: {self.plan_ahead} "
+                )
+
+    def __repr__(self):
+        return (
+            f"activity(name: '{self.name}',\n "
+            f"price: {self.price},\n "
+            f"length of time: {self.length_of_time} hours,\n "
+            f"plan ahead?: {self.plan_ahead},\n "
+            )
 
     @classmethod
     def create_table(cls):
@@ -78,7 +92,7 @@ class Activity:
         name TEXT,
         price FLOAT,
         length_of_time INTEGER,
-        plan_ahead BOOLEAN,
+        plan_ahead TEXT,
         destination_id INTEGER,
         FOREIGN KEY (destination_id) REFERENCES destinations(id)
         )
@@ -104,7 +118,7 @@ class Activity:
                 VALUES (?, ?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.name, float(self.price), int(self.length_of_time), bool(self.plan_ahead), self.destination_id))
+        CURSOR.execute(sql, (self.name, float(self.price), int(self.length_of_time), str(self.plan_ahead), self.destination_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -142,7 +156,7 @@ class Activity:
     @classmethod
     def create(cls, name, price, length_of_time, plan_ahead, destination_id):
         """ Initialize a new Activity instance and save the object to the database """
-        activity = cls(name, float(price), int(length_of_time), bool(plan_ahead), destination_id)
+        activity = cls(name, float(price), int(length_of_time), str(plan_ahead), destination_id)
         activity.save()
         return activity
 
@@ -157,11 +171,11 @@ class Activity:
             activity.name = row[1]
             activity.price = row[2]
             activity.length_of_time = row[3]
-            activity.plan_ahead = row[4]
+            activity.plan_ahead = str(row[4])
             activity.destination_id = row[5]
         else:
             # not in dictionary, create new instance and add to dictionary
-            activity = cls(row[1], row[2], row[3], row[4], row[5])
+            activity = cls(row[1], row[2], row[3], str(row[4]), row[5])
             activity.id = row[0]
             cls.all[activity.id] = activity
         return activity
