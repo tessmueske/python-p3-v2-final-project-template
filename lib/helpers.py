@@ -54,20 +54,37 @@ def delete_destination():
 
 ##########################################
 
+# def create_activity():
+#     name = input("enter the activity's name! ")
+#     price = input("enter the activity's price! ")
+#     length_of_time = input("enter the activity's length of time in estimated whole hours! ")
+#     plan_ahead = input("enter whether or not the activity needs to be planned in advance by entering either True (for yes) or False (for no)! ")
+#     destination_name = input("enter the name of the destination for this activity! ")
+#     try:
+#         activity = Activity.create(name, price, length_of_time, plan_ahead, destination_name)
+#         print('success!')
+#     except Exception as exc:
+#         print("error creating activity :( ", exc)
+
 def create_activity():
     name = input("enter the activity's name! ")
     price = input("enter the activity's price! ")
     length_of_time = input("enter the activity's length of time in estimated whole hours! ")
     plan_ahead = input("enter whether or not the activity needs to be planned in advance by entering either True (for yes) or False (for no)! ")
     destination_name = input("enter the name of the destination for this activity! ")
-    try:
-        activity = Activity.create(name, price, length_of_time, plan_ahead, destination_name)
-        print('success!')
-    except Exception as exc:
-        print("error creating activity :( ", exc)
+    destination = Destination.find_by_name(destination_name)
+    if destination:
+        try:
+            activity = Activity.create(name, price, length_of_time, plan_ahead, destination.id)
+            print('success!')
+        except Exception as exc:
+            print("error creating activity :( ", exc)
+    else:
+        print(f"destination '{destination_name}' not found.... please create the destination first!")
+
 
 def list_all_activities_by_name():
-    activity = Activity.get_all()
+    activities = Activity.get_all()
     for activity in activities:
         print(activity)
 
@@ -103,9 +120,11 @@ def update_activity():
             price = input("enter the activity's new price! ")
             activity.price = price
             length_of_time = input("enter the activity's new anticipated length of time, in whole hours! ")
+            activity.length_of_time = length_of_time
             plan_ahead = input("does the activity needs to be planned in advance? (True = yes, False = no) ")
+            activity.plan_ahead = plan_ahead
             destination_name = input("enter the activity's destination! ")
-            activity.destination_name = destination_name
+            activity.destination_name = destination.id
 
             activity.update()
             print(f'success! {activity} updated!')

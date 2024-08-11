@@ -65,7 +65,7 @@ class Destination:
     @classmethod
     def create(cls, name):
         """ Initialize a new Destination instance and save the object to the database """
-        destination = cls(name)
+        destination = cls(name, id)
         destination.save()
         return destination
 
@@ -170,18 +170,3 @@ class Destination:
         return [
             Activity.instance_from_db(row) for row in rows
         ]
-
-# Destinations:
-# Córdoba
-# Alicante
-# Barcelona
-# Granada
-# Madrid
-# Valencia
-# Seville
-# Bilbao
-# Toledo
-# Zaragoza
-# Balearic Islands
-# Canary Islands
-# Rioja
