@@ -53,7 +53,7 @@ class Activity:
     @plan_ahead.setter
     def plan_ahead(self, value):
         if not isinstance(value, str):
-            raise Exception("Plan ahead must be a string.")
+            raise Exception("plan ahead must be a string.")
         self._plan_ahead = value
 
     @property
@@ -69,19 +69,11 @@ class Activity:
                 "destination_id must reference a destination in the database.")
 
     def __str__(self):
-        return (f"name: '{self.name}',\n "
-                f"price: {self.price},\n "
-                f"length of time: {self.length_of_time} hours,\n "
-                f"plan ahead?: {self.plan_ahead} "
+        return (f"\nname: {self.name}\n "
+                f"price: ${self.price:.2f}\n"
+                f"length of time: {self.length_of_time} hours\n "
+                f"plan ahead?: {self.plan_ahead} \n"
                 )
-
-    def __repr__(self):
-        return (
-            f"activity(name: '{self.name}',\n "
-            f"price: {self.price},\n "
-            f"length of time: {self.length_of_time} hours,\n "
-            f"plan ahead?: {self.plan_ahead},\n "
-            )
 
     @classmethod
     def create_table(cls):
@@ -128,7 +120,7 @@ class Activity:
         """Update the table row corresponding to the current Activity instance."""
         sql = """
             UPDATE activities
-            SET name = ?, price = ?, length_of_time = ?, plan_ ahead = ?, destination_id = ?
+            SET name = ?, price = ?, length_of_time = ?, plan_ahead = ?, destination_id = ?
             WHERE id = ?
         """
         CURSOR.execute(sql, (self.name, self.price, self.length_of_time, self.plan_ahead,
