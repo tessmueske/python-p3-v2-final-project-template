@@ -54,6 +54,7 @@ def delete_destination():
 
 ##########################################
 
+#COMPLETED
 def create_activity():
     name = input("enter the activity's name! ")
     price = input("enter the activity's price! ")
@@ -70,34 +71,19 @@ def create_activity():
     else:
         print(f"\ndestination '{destination_name}' not found.... please create the destination first!\n")
 
+#COMPLETED
 def list_all_activities_by_name():
     activities = Activity.get_all()
     for activity in activities:
         print(activity)
 
+#COMPLETED
 def find_activity_by_name():
     name = input("\nenter the activity's name! \n")
     activity = Activity.find_by_name(name)
     print(activity) if activity else print('\nactivity not found :( try again?\n')
 
-def find_activity_by_price():
-    price = input("\nenter the activity's price in $0.00 format! \n")
-    activity = Activity.find_by_price(price)
-    print(activity) if activity else print(
-        f'\nactivities costing {price} not found :( try again?\n')
-
-# def find_activity_by_length_of_time():
-#     length_of_time = input("enter the activity's anticipated length of time in whole hours! ")
-#     activity = Activity.find_by_length_of_time(length_of_time)
-#     print(activity) if activity else print(
-#         f'activities lasting {length_of_time} hour(s) not found :( try again?')
-
-# def find_activity_by_plan_ahead():
-#     plan_ahead = input("enter whether or not the activity needs to be planned in advance (T/F)! ")
-#     activity = Activity.find_by_plan_ahead(plan_ahead)
-#     print(activity) if activity else print(
-#         f'activities requiring advance notice (T/F) {plan_ahead} not found :( try again?')
-
+#COMPLETED
 def update_activity():
     name = input("\nenter the activity's name you want to edit! \n")
     activity = Activity.find_by_name(name)
@@ -138,6 +124,7 @@ def update_activity():
     else:
         print(f"\nactivity '{name}' not found. try again? (make sure it's in your database!)\n")
 
+#COMPLETED
 def delete_activity():
     name = input("\nenter the activity's name! \n")
     if activity := Activity.find_by_name(name):
@@ -147,7 +134,31 @@ def delete_activity():
         print(f'\nactivity {name} not found :( try again?\n')
 
 def list_destination_and_activities():
-    pass
+    destination_name = input("enter the destination name whose associated activities you'd like to see: ")
+    destination = Destination.find_by_name(destination_name)
+    if destination:
+        activities = destination.activities()
+        if activities:
+            print(f"\nactivities for {destination_name}:")
+            for activity in activities:
+                print(activity)
+        else:
+            print(f"no activities found for destination {destination_name} :(")
+    else:
+        print('destination not found. make sure it is in your database!')
+
 
 def list_everything():
-    pass
+    destinations = Destination.get_all()
+    if destinations:
+        for destination in destinations:
+            print(f"\ndestination: {destination.name}")
+            activities = destination.activities()
+            if activities:
+                print("activities:")
+                for activity in activities:
+                    print(activity)
+            else:
+                print("no activities found :( ")
+    else:
+        print("no destinations found :(")

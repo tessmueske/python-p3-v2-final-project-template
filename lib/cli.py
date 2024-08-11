@@ -47,7 +47,7 @@ def main():
             update_activity()
         elif choice == "10":
             delete_activity()
-        elif choice == "12":
+        elif choice == "11":
             list_destination_and_activities()
         elif choice == "12":
             list_everything()
@@ -68,7 +68,7 @@ def menu():
     print("9. update an activity \n")
     print("10. delete an activity \n")
     print("11. list one destination and all its activities \n")
-    print("11. list all destinations and all their activities \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n ")
+    print("12. list all destinations and all their activities \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n ")
 
 if __name__ == "__main__":
     main()
