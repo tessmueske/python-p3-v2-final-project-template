@@ -47,14 +47,15 @@ class Activity:
         self._length_of_time = value
     
     @property
-    def plan_ahead(self):
-        return self._plan_ahead
-
-    @plan_ahead.setter
     def plan_ahead(self, value):
-        if not isinstance(value, bool):
-            raise Exception("response must be either True (for yes) or False (for no)")
-        self._plan_ahead = value
+        if isinstance(value, bool):
+            self._plan_ahead = value
+        elif value in ["yes", "true"]:
+            self._plan_ahead = True
+        elif value in ["no", "false"]:
+            self._plan_ahead = False
+        else:
+            raise Exception('response must be either "yes", "true", "no", or "false"')
 
     @property
     def destination_id(self):
