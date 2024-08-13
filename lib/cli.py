@@ -43,6 +43,8 @@ def change_dest():
     while True:
         change_dest_menu_option()
         choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
+        if choice == "list all":
+            list_destinations()
         if choice == "select":
             destination = select_dest()
             if destination:
@@ -53,6 +55,10 @@ def change_dest():
             update_destination()
         elif choice == "delete":
             delete_destination()
+        elif choice == "create":
+            create_destination()
+        elif choice == "go back":
+            main()
         elif choice == "e":
             exit_()
 
@@ -84,10 +90,12 @@ def dest_menu():
 
 def change_dest_menu_option():
     print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! \n")
+    print("type 'list all' to list all destinations \n")
     print("type 'select' to select a destination \n")
     print("type 'update' to update a destination \n")
     print("type 'delete' to delete a destination \n")
-    print("type 'go back' to go back to the main destinations menu")
+    print ("type 'create' to create a new destination \n")
+    print("type 'go back' to go back to the main destinations menu \n")
     print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
 
 def activity_menu_option():
