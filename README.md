@@ -16,6 +16,12 @@ Finally, I want the CLI to be aesthetically pleasing to look at and engage with.
 
 *****************************************************************
 
+My CLI script has three menus: the landing menu, the destinations menu, and the activity menu. From the landing menu, the user can do a few things: they can see a master list of all destinations and their associated activities, they can view only the master destinations list, they can add a new destination to their list, they can search if a specific activity exists, they can select a destination to do something with, and they can exit the program. From the destinations menu, a user can select a destination to add an activity to, and from the activity menu, the user can add, delete, or update an activity. The user can always go back to the prior menu or exit the program. 
+
+In helpers.py, I have the helper functions sorted by their two models: Destination and Activity. In each model, I have the SQL commands and property verifiers. 
+
+*****************************************************************
+
 Blog post on property decorators: https://dev.to/tessmueske/decorator-getters-and-setters-in-python-6cd
 
 Blog post on function decorators: https://dev.to/tessmueske/function-decorators-in-python-55l
