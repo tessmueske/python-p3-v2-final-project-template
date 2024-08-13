@@ -19,13 +19,17 @@ def create_destination():
 def list_destinations():
     destinations = Destination.get_all()
     for destination in destinations:
-        print(f"\nname: {destination.name}\n ")
+        print(f"\n{destination.name}\n ")
 
 def select_dest():
-    name = input("\n\nenter the destination's name from the list provided! ")
+    name = input("\n\nenter the destination's name from the destinations list! ")
     destination = Destination.find_by_name(name)
-    print(destination) if destination else print(
-        f'\ndestination {name} not found :(\n')
+    if destination:
+        print(f"\nname: {destination.name}") 
+        return destination
+    else:
+        print(f'\ndestination {name} not found :(\n')
+        return None
 
 def update_destination():
     name = input("\n\n enter the destination's name! ")
@@ -38,7 +42,6 @@ def update_destination():
     else:
         print("\n\n destination not found :( try again?\n\n")
 
-#COMPLETED
 def delete_destination():
     name = input("\n\nenter the destination's name! \n\n")
     if destination := Destination.find_by_name(name):
@@ -49,36 +52,53 @@ def delete_destination():
 
 ##########################################
 
+
 def create_activity(destination):
     name = input("enter the activity's name! ")
     price = input("enter the activity's price! ")
     length_of_time = input("enter the activity's length of time in estimated whole hours! ")
     plan_ahead = input("does the activity need to be planned in advance? ")
-    try:
-        activity = Activity.create(name, price, length_of_time, plan_ahead, destination.id)
-        print('\n\nsuccess!\n\n')
-    except Exception as exc:
-        print("\error creating activity :( \n", exc)
+    if destination and destination.id:
+        try:
+            activity = Activity.create(name, price, length_of_time, plan_ahead, destination.id)
+            print('\n\nsuccess!\n\n')
+        except Exception as exc:
+            print("\nerror creating activity :( \nmore info: ", exc)
+    else:
+        print("destination not found :( make sure it's in your database already, and remember it's case sensitive. ")
 
 def list_all_activities(destination):
-    activities = destination.activities()
-    if activities:
-        for activity in activities:
-            print(f"\nname: {activity.name}\n "
-                  f"price: ${activity.price:.2f}\n"
-                  f"length of time: {activity.length_of_time} hours\n "
-                  f"plan ahead?: {activity.plan_ahead} \n"
-                  )
+    if destination:
+        activities = destination.activities()
+        if activities:
+            for activity in activities:
+                print(
+                    f"\ndestination: {destination.name}"
+                    f"\nname: {activity.name}\n "
+                    f"price: ${activity.price:.2f}\n"
+                    f"length of time: {activity.length_of_time} hours\n "
+                    f"plan ahead?: {activity.plan_ahead} \n"
+                      )
+        else:
+            print(f"\nno activities found for {destination.name} :(\n")
     else:
-        print(f"\nno activities found for {destination.name} :(\n")
-
+        print("no destination selected.")
 
 def find_activity():
-    name = input("\nenter the activity's name! \n")
+    name = input("\nenter the activity's name! remember that it's case sensitive. \n")
     activity = Activity.find_by_name(name)
-    print(activity) if activity else print('\nactivity not found :( try again?\n')
+    if activity:
+        print(
+            f"\ndestination: {destination.name}"
+            f"\nname: {activity.name}\n "
+            f"price: ${activity.price:.2f}\n"
+            f"length of time: {activity.length_of_time} hours\n "
+            f"plan ahead?: {activity.plan_ahead} \n"
+            )
+    else:
+        print('\nactivity not found :( try again?\n')
 
-def update_activity():
+def update_activity(destination):
     name = input("\nenter the activity's name you want to edit! \n")
     activity = Activity.find_by_name(name)
     if activity:
@@ -100,8 +120,7 @@ def update_activity():
             activity.plan_ahead = plan_ahead
             
             # update destination
-            destination_name = input("\nenter the activity's destination: \n")
-            destination = Destination.find_by_name(destination_name)
+            destination = Destination.find_by_id(destination.id)
             if destination:
                 activity.destination_id = destination.id
             else:
@@ -149,8 +168,12 @@ def list_everything():
             if activities:
                 print("activities:")
                 for activity in activities:
-                    print(activity)
+                    print(f"\nname: {activity.name}\n "
+                        f"price: ${activity.price:.2f}\n"
+                        f"length of time: {activity.length_of_time} hours\n "
+                        f"plan ahead?: {activity.plan_ahead} \n"
+                        )
             else:
-                print("no activities found :( ")
+                print("none yet!")
     else:
-        print("no destinations found :(")
+        print("no destinations found :( why don't you try adding one?")
