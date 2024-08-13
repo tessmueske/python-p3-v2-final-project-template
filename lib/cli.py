@@ -18,9 +18,6 @@ from helpers import (
     list_everything
 )
 
-# Destination.create_table()
-# Activity.create_table()
-
 # main menu
 def main():
     while True:
@@ -45,11 +42,12 @@ def change_dest():
         choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
         if choice == "list all":
             list_destinations()
-        if choice == "select":
+        elif choice == "select":
             destination = select_dest()
             if destination:
                 list_destination_and_activities(destination) 
                 activity_menu(destination)
+            else:
                 print("no destination selected :(")
         elif choice == "update":
             update_destination()
@@ -58,7 +56,7 @@ def change_dest():
         elif choice == "create":
             create_destination()
         elif choice == "go back":
-            main()
+            return 
         elif choice == "e":
             exit_()
 
@@ -76,7 +74,7 @@ def activity_menu(destination):
         elif choice == "delete A":
             delete_activity(destination)
         elif choice == "go back":
-            return
+            return 
         elif choice == "e":
             exit_()
 

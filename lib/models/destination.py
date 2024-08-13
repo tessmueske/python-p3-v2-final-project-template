@@ -20,12 +20,6 @@ class Destination:
         if len(value) <= 0:
             raise Exception("destination name must be greater than zero characters.")
         self._name = value
-
-    # def __str__(self):
-    #     return self.name
-
-    # def __repr__(self):
-    #     return f"destination(name = '{self.name}')"
     
     @classmethod
     def create_table(cls):

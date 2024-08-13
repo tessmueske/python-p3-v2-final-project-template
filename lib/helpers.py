@@ -2,7 +2,6 @@
 from models.activity import Activity
 from models.destination import Destination
 
-#COMPLETED
 def exit_():
     print(
         " \n˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚\n \nthanks for planning! happy travels :) \n\n˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚˚ ༘♡ ⋆｡˚\n"
@@ -50,30 +49,29 @@ def delete_destination():
 
 ##########################################
 
-def create_activity():
+def create_activity(destination):
     name = input("enter the activity's name! ")
     price = input("enter the activity's price! ")
     length_of_time = input("enter the activity's length of time in estimated whole hours! ")
     plan_ahead = input("does the activity need to be planned in advance? ")
-    destination_name = input("enter the name of the destination for this activity! ")
-    destination = Destination.find_by_name(destination_name)
-    if destination:
-        try:
-            activity = Activity.create(name, price, length_of_time, plan_ahead, destination.id)
-            print('\n\nsuccess!\n\n')
-        except Exception as exc:
-            print("\nerror creating activity :( \n", exc)
-    else:
-        print(f"\ndestination '{destination_name}' not found.... please create the destination first!\n")
+    try:
+        activity = Activity.create(name, price, length_of_time, plan_ahead, destination.id)
+        print('\n\nsuccess!\n\n')
+    except Exception as exc:
+        print("\error creating activity :( \n", exc)
 
-def list_all_activities():
-    activities = Activity.get_all()
-    for activity in activities:
-        print(f"\nname: {activity.name}\n "
-                f"price: ${activity.price:.2f}\n"
-                f"length of time: {activity.length_of_time} hours\n "
-                f"plan ahead?: {activity.plan_ahead} \n"
-                )
+def list_all_activities(destination):
+    activities = destination.activities()
+    if activities:
+        for activity in activities:
+            print(f"\nname: {activity.name}\n "
+                  f"price: ${activity.price:.2f}\n"
+                  f"length of time: {activity.length_of_time} hours\n "
+                  f"plan ahead?: {activity.plan_ahead} \n"
+                  )
+    else:
+        print(f"\nno activities found for {destination.name} :(\n")
+
 
 def find_activity():
     name = input("\nenter the activity's name! \n")
@@ -128,7 +126,7 @@ def delete_activity():
     else:
         print(f'\nactivity {name} not found :( try again?\n')
 
-def list_destination_and_activities():
+def list_destination_and_activities(destination):
     destination_name = input("enter the destination name whose associated activities you'd like to see: ")
     destination = Destination.find_by_name(destination_name)
     if destination:
@@ -156,5 +154,3 @@ def list_everything():
                 print("no activities found :( ")
     else:
         print("no destinations found :(")
-
-#move formatting to the front end

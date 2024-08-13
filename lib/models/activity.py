@@ -68,13 +68,6 @@ class Activity:
             raise ValueError(
                 "destination_id must reference a destination in the database.")
 
-    # def __str__(self):
-    #     return (f"\nname: {self.name}\n "
-    #             f"price: ${self.price:.2f}\n"
-    #             f"length of time: {self.length_of_time} hours\n "
-    #             f"plan ahead?: {self.plan_ahead} \n"
-    #             )
-
     @classmethod
     def create_table(cls):
         """Create a new table to persist the attributes of Activity instances"""
