@@ -5,70 +5,98 @@ from models.destination import Destination
 from helpers import (
     exit_,
     create_destination,
-    list_destinations_by_name,
-    find_destination_by_name,
+    list_destinations,
+    select_dest,
     update_destination,
     delete_destination,
     create_activity,
-    list_all_activities_by_name,
-    find_activity_by_name,
+    list_all_activities,
+    find_activity,
     update_activity,
     delete_activity,
     list_destination_and_activities,
     list_everything
 )
 
-Destination.create_table()
-Activity.create_table()
+# Destination.create_table()
+# Activity.create_table()
 
+# main menu
 def main():
     while True:
-        menu()
+        dest_menu()
         choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
-        if choice == "0":
-            exit_()
-        elif choice == "1":
+        if choice == "list all":
+            list_destinations()
+            change_dest()
+        elif choice == "create":
             create_destination()
-        elif choice == "2":
-            list_destinations_by_name()
-        elif choice == "3":
-            find_destination_by_name()
-        elif choice == "4":
-            update_destination()
-        elif choice == "5":
-            delete_destination()
-        elif choice == "6":
-            create_activity()
-        elif choice == "7":
-            list_all_activities_by_name()
-        elif choice == "8":
-            find_activity_by_name()
-        elif choice == "9":
-            update_activity()
-        elif choice == "10":
-            delete_activity()
-        elif choice == "11":
-            list_destination_and_activities()
-        elif choice == "12":
+        elif choice == "search A":
+            find_activity()
+        elif choice == "see everything":
             list_everything()
-        else:
-            print("\n .·:*¨ ¨*:·. \n invalid choice :( select something else? \n .·:*¨ ¨*:·. \n ")
+        elif choice == "e":
+            exit_()
 
-def menu():
+# change destination menu
+def change_dest():
+    while True:
+        change_dest_menu_option()
+        choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
+        if choice == "select":
+            destination = select_dest()
+            if destination:
+                list_destination_and_activities(destination) 
+                activity_menu(destination)
+                print("no destination selected :(")
+        elif choice == "update":
+            update_destination()
+        elif choice == "delete":
+            delete_destination()
+        elif choice == "e":
+            exit_()
+
+# activity menu
+def activity_menu(destination):
+    activity_menu_option()
+    while True:
+        choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
+        if choice == "create A":
+            create_activity(destination) 
+        elif choice == "list A":
+            list_all_activities(destination) 
+        elif choice == "update A":
+            update_activity(destination)
+        elif choice == "delete A":
+            delete_activity(destination)
+        elif choice == "go back":
+            return
+        elif choice == "e":
+            exit_()
+
+def dest_menu():
+    print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! (options are case sensitive)\n")
+    print("type 'list all' to list all destinations \n")
+    print("type 'create' to create a new destination \n")
+    print("type 'search A' to search for an activity \n")
+    print("type 'see everything' to see all destinations and all activities \n")
+    print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
+
+def change_dest_menu_option():
     print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! \n")
-    print("0. exit \n")
-    print("1. create a destination \n")
-    print("2. list all destinations by name \n")
-    print("3. find a destination by its name \n")
-    print("4. update a destination \n")
-    print("5. delete a destination \n")
-    print("6. create an activity \n")
-    print("7. list all activities by name \n")
-    print("8. find an activity by its name \n")
-    print("9. update an activity \n")
-    print("10. delete an activity \n")
-    print("11. list one destination and all its activities \n")
-    print("12. list all destinations and all their activities \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n ")
+    print("type 'select' to select a destination \n")
+    print("type 'update' to update a destination \n")
+    print("type 'delete' to delete a destination \n")
+    print("type 'go back' to go back to the main destinations menu")
+    print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
+
+def activity_menu_option():
+    print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! \n")
+    print("type 'create A' to create an activity \n")
+    print("type 'list all A' to list all activities \n")
+    print("type 'update A' to update an activity \n")
+    print("type 'delete A' to delete an activity \n")
+    print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
 
 if __name__ == "__main__":
     main()

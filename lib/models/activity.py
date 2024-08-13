@@ -68,12 +68,12 @@ class Activity:
             raise ValueError(
                 "destination_id must reference a destination in the database.")
 
-    def __str__(self):
-        return (f"\nname: {self.name}\n "
-                f"price: ${self.price:.2f}\n"
-                f"length of time: {self.length_of_time} hours\n "
-                f"plan ahead?: {self.plan_ahead} \n"
-                )
+    # def __str__(self):
+    #     return (f"\nname: {self.name}\n "
+    #             f"price: ${self.price:.2f}\n"
+    #             f"length of time: {self.length_of_time} hours\n "
+    #             f"plan ahead?: {self.plan_ahead} \n"
+    #             )
 
     @classmethod
     def create_table(cls):
@@ -85,8 +85,7 @@ class Activity:
         price FLOAT,
         length_of_time INTEGER,
         plan_ahead TEXT,
-        destination_id INTEGER,
-        FOREIGN KEY (destination_id) REFERENCES destinations(id)
+        destination_id INTEGER
         )
         """
         CURSOR.execute(sql)
@@ -139,10 +138,8 @@ class Activity:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        # Delete the dictionary entry using id as the key
         del type(self).all[self.id]
 
-        # Set the id to None
         self.id = None
 
     @classmethod
@@ -156,17 +153,14 @@ class Activity:
     def instance_from_db(cls, row):
         """Return an Activity object having the attribute values from the table row."""
 
-        # Check the dictionary for  existing instance using the row's primary key
         activity = cls.all.get(row[0])
         if activity:
-            # ensure attributes match row values in case local instance was modified
             activity.name = row[1]
             activity.price = row[2]
             activity.length_of_time = row[3]
             activity.plan_ahead = str(row[4])
             activity.destination_id = row[5]
         else:
-            # not in dictionary, create new instance and add to dictionary
             activity = cls(row[1], row[2], row[3], str(row[4]), row[5])
             activity.id = row[0]
             cls.all[activity.id] = activity

@@ -9,7 +9,6 @@ def exit_():
         )
     exit()
 
-#COMPLETED
 def create_destination():
     name = input("\n\nenter the destination's name! ")
     try:
@@ -18,20 +17,17 @@ def create_destination():
     except Exception as exc:
         print("\n\nerror creating destination ✎ \n\n", exc)
 
-#COMPLETED
-def list_destinations_by_name():
+def list_destinations():
     destinations = Destination.get_all()
     for destination in destinations:
-        print(destination)
+        print(f"\nname: {destination.name}\n ")
 
-#COMPLETED
-def find_destination_by_name():
-    name = input("\n\nenter the destination's name! ")
+def select_dest():
+    name = input("\n\nenter the destination's name from the list provided! ")
     destination = Destination.find_by_name(name)
     print(destination) if destination else print(
         f'\ndestination {name} not found :(\n')
 
-#COMPLETED
 def update_destination():
     name = input("\n\n enter the destination's name! ")
     
@@ -54,7 +50,6 @@ def delete_destination():
 
 ##########################################
 
-#COMPLETED
 def create_activity():
     name = input("enter the activity's name! ")
     price = input("enter the activity's price! ")
@@ -71,19 +66,20 @@ def create_activity():
     else:
         print(f"\ndestination '{destination_name}' not found.... please create the destination first!\n")
 
-#COMPLETED
-def list_all_activities_by_name():
+def list_all_activities():
     activities = Activity.get_all()
     for activity in activities:
-        print(activity)
+        print(f"\nname: {activity.name}\n "
+                f"price: ${activity.price:.2f}\n"
+                f"length of time: {activity.length_of_time} hours\n "
+                f"plan ahead?: {activity.plan_ahead} \n"
+                )
 
-#COMPLETED
-def find_activity_by_name():
+def find_activity():
     name = input("\nenter the activity's name! \n")
     activity = Activity.find_by_name(name)
     print(activity) if activity else print('\nactivity not found :( try again?\n')
 
-#COMPLETED
 def update_activity():
     name = input("\nenter the activity's name you want to edit! \n")
     activity = Activity.find_by_name(name)
@@ -114,7 +110,7 @@ def update_activity():
                 print(f"\ndestination '{destination_name}' not found... make sure it's in the database!\n")
                 return
             
-            # Save changes
+            # save changes
             activity.update()
             print(f"\nsuccess! your activity has been updated :)\n")
         except ValueError as ve:
@@ -124,7 +120,6 @@ def update_activity():
     else:
         print(f"\nactivity '{name}' not found. try again? (make sure it's in your database!)\n")
 
-#COMPLETED
 def delete_activity():
     name = input("\nenter the activity's name! \n")
     if activity := Activity.find_by_name(name):
@@ -147,7 +142,6 @@ def list_destination_and_activities():
     else:
         print('destination not found. make sure it is in your database!')
 
-
 def list_everything():
     destinations = Destination.get_all()
     if destinations:
@@ -162,3 +156,5 @@ def list_everything():
                 print("no activities found :( ")
     else:
         print("no destinations found :(")
+
+#move formatting to the front end

@@ -16,16 +16,16 @@ class Destination:
     @name.setter
     def name(self, value):
         if not isinstance(value, str):
-            raise Exception("Destination name must only have letters.")
+            raise Exception("destination name must only have letters.")
         if len(value) <= 0:
-            raise Exception("Destination name must be greater than zero characters.")
+            raise Exception("destination name must be greater than zero characters.")
         self._name = value
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
-    def __repr__(self):
-        return f"destination(name = '{self.name}')"
+    # def __repr__(self):
+    #     return f"destination(name = '{self.name}')"
     
     @classmethod
     def create_table(cls):
@@ -55,7 +55,7 @@ class Destination:
             INSERT INTO destinations (name)
             VALUES (?)
         """
-        CURSOR.execute(sql, (self.name,))  # Note the trailing comma to ensure it's a tuple
+        CURSOR.execute(sql, (self.name,)) 
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -91,23 +91,18 @@ class Destination:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        # Delete the dictionary entry using id as the key
         del type(self).all[self.id]
 
-        # Set the id to None
         self.id = None
 
     @classmethod
     def instance_from_db(cls, row):
         """Return a Destination object having the attribute values from the table row."""
 
-        # Check the dictionary for an existing instance using the row's primary key
         destination = cls.all.get(row[0])
         if destination:
-            # ensure attributes match row values in case local instance was modified
             destination.name = row[1]
         else:
-            # not in dictionary, create new instance and add to dictionary
             destination = cls(row[1])
             destination.id = row[0]
             cls.all[destination.id] = destination
@@ -136,14 +131,6 @@ class Destination:
 
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
-
-        # For my dogs I can use get_all to get a list of dog objects.  To print them out nicely numbered I can do:
-            # for i, dog in enumerate(dogs, start=1):
-            #     		print(f”{i}.  {dog.name}”)
-
-        # Now the dogs are printed out with sequential numbers (not their id’s) and the client can select one using that number.
-
-        # Since I got the dogs from the backend using .get_all() and iterated through the list as shown above, if the user wants number 3, I know the user wants the third one in that list and I can just grab it from dogs - but the 3rd dog's index in the list is 2 (because the first item in a list is at index 0).  dogs is a list of dog objects, so if the user says "I pick 3" I show them dogs[number_they_picked - 1] and voila!  I have the dog (an object) they wanted with all its attributes available to me to show them!! 
 
     @classmethod
     def find_by_name(cls, name):
