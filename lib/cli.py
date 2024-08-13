@@ -24,7 +24,9 @@ def main():
         choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
         if choice == "list all":
             list_destinations()
-            change_dest()  
+            change_dest()
+        elif choice == "everything":
+            list_everything()
         elif choice == "create":
             create_destination()
         elif choice == "search A":
@@ -41,6 +43,8 @@ def change_dest():
         choice = input("➺➺➺➺➺➺➺➺➺➺➺ ")
         if choice == "list all":
             list_destinations()
+        elif choice == "everything":
+            list_everything()
         elif choice == "select":
             destination = select_dest()
             activity_menu(destination)
@@ -80,14 +84,16 @@ def activity_menu(destination):
 def dest_menu():
     print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! (options are case sensitive)\n")
     print("type 'list all' to list all destinations \n")
+    print("type 'everything' to see all destinations and all activities \n")
     print("type 'create' to create a new destination \n")
-    print("type 'search A' to search for an activity \n")
+    print("type 'search A' to search for an activity \n") ############
     print("type 'see everything' to see all destinations and all activities \n")
     print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
 
 def change_dest_menu_option():
     print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! \n")
     print("type 'list all' to list all destinations \n")
+    print("type 'everything' to see all destinations and all activities \n")
     print("type 'select' to select a destination \n")
     print("type 'update' to update a destination's name \n")
     print("type 'delete' to delete a destination \n")
@@ -99,8 +105,8 @@ def activity_menu_option():
     print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n what do you want to do with this destination? \n")
     print("type 'add A' to add an activity for this destination \n") 
     print("type 'list all A' to list all activities for this destination \n") 
-    print("type 'update A' to update an activity for this destination \n") #######
-    print("type 'delete A' to delete an activity from this destination \n") ######
+    print("type 'update A' to update an activity for this destination \n") 
+    print("type 'delete A' to delete an activity from this destination \n") 
     print("type 'go back' to go back to the main destinations menu \n") 
     print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
 

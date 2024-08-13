@@ -85,18 +85,22 @@ def list_all_activities(destination):
         print("no destination selected.")
 
 def find_activity():
-    name = input("\nenter the activity's name! remember that it's case sensitive. \n")
+    name = input("\nenter the activity's name! remember that it's case sensitive.\n")
     activity = Activity.find_by_name(name)
+    
     if activity:
+        destination = Destination.find_by_id(activity.destination_id)
         print(
-            f"\ndestination: {destination.name}"
-            f"\nname: {activity.name}\n "
+            f"\ndestination: {destination.name if destination else 'Unknown'}"
+            f"\nname: {activity.name}\n"
             f"price: ${activity.price:.2f}\n"
-            f"length of time: {activity.length_of_time} hours\n "
-            f"plan ahead?: {activity.plan_ahead} \n"
-            )
+            f"length of time: {activity.length_of_time} hours\n"
+            f"plan ahead?: {activity.plan_ahead}\n"
+        )
     else:
         print('\nactivity not found :( try again?\n')
+
+
 
 def update_activity(destination):
     name = input("\nenter the activity's name you want to edit! \n")
@@ -163,7 +167,7 @@ def list_everything():
     destinations = Destination.get_all()
     if destinations:
         for destination in destinations:
-            print(f"\ndestination: {destination.name}")
+            print(f"\ndestination: {destination.name} \n -----------------------")
             activities = destination.activities()
             if activities:
                 print("activities:")
@@ -171,7 +175,7 @@ def list_everything():
                     print(f"\nname: {activity.name}\n "
                         f"price: ${activity.price:.2f}\n"
                         f"length of time: {activity.length_of_time} hours\n "
-                        f"plan ahead?: {activity.plan_ahead} \n"
+                        f"plan ahead?: {activity.plan_ahead} \n ********************* \n"
                         )
             else:
                 print("none yet!")
