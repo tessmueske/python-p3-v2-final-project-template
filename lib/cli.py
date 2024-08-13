@@ -27,6 +27,9 @@ def main():
             change_dest()
         elif choice == "everything":
             list_everything()
+        elif choice == "select":
+            destination = select_dest()
+            activity_menu(destination)
         elif choice == "create":
             create_destination()
         elif choice == "search A":
@@ -85,8 +88,9 @@ def dest_menu():
     print("\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n\n please select an option! (options are case sensitive)\n")
     print("type 'list all' to list all destinations \n")
     print("type 'everything' to see all destinations and all activities \n")
+    print("type 'select' to select a destination \n")
     print("type 'create' to create a new destination \n")
-    print("type 'search A' to search for an activity \n") ############
+    print("type 'search A' to search for an activity \n") 
     print("type 'see everything' to see all destinations and all activities \n")
     print("type 'e' to exit \n\n .·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·..·:*¨ ¨*:·. \n")
 

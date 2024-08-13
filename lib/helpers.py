@@ -18,6 +18,7 @@ def create_destination():
 
 def list_destinations():
     destinations = Destination.get_all()
+    print("\n\nALL DESTINATIONS:")
     for destination in destinations:
         print(f"\n{destination.name}\n ")
 
@@ -54,10 +55,10 @@ def delete_destination():
 
 
 def create_activity(destination):
-    name = input("enter the activity's name! ")
-    price = input("enter the activity's price! ")
-    length_of_time = input("enter the activity's length of time in estimated whole hours! ")
-    plan_ahead = input("does the activity need to be planned in advance? ")
+    name = input("enter the activity's name! \n")
+    price = input("enter the activity's price! \n")
+    length_of_time = input("enter the activity's length of time in estimated whole hours! \n")
+    plan_ahead = input("does the activity need to be planned in advance? \n")
     if destination and destination.id:
         try:
             activity = Activity.create(name, price, length_of_time, plan_ahead, destination.id)
@@ -70,10 +71,10 @@ def create_activity(destination):
 def list_all_activities(destination):
     if destination:
         activities = destination.activities()
+        print(f"\ndestination: {destination.name}")
         if activities:
             for activity in activities:
                 print(
-                    f"\ndestination: {destination.name}"
                     f"\nname: {activity.name}\n "
                     f"price: ${activity.price:.2f}\n"
                     f"length of time: {activity.length_of_time} hours\n "
@@ -91,7 +92,7 @@ def find_activity():
     if activity:
         destination = Destination.find_by_id(activity.destination_id)
         print(
-            f"\ndestination: {destination.name if destination else 'Unknown'}"
+            f"\ndestination: {destination.name if destination else 'unknown destination'}"
             f"\nname: {activity.name}\n"
             f"price: ${activity.price:.2f}\n"
             f"length of time: {activity.length_of_time} hours\n"
@@ -99,8 +100,6 @@ def find_activity():
         )
     else:
         print('\nactivity not found :( try again?\n')
-
-
 
 def update_activity(destination):
     name = input("\nenter the activity's name you want to edit! \n")
@@ -167,15 +166,15 @@ def list_everything():
     destinations = Destination.get_all()
     if destinations:
         for destination in destinations:
-            print(f"\ndestination: {destination.name} \n -----------------------")
+            print(f"\ndestination: {destination.name} \n")
             activities = destination.activities()
             if activities:
-                print("activities:")
+                print("activities:\n-----------------------")
                 for activity in activities:
                     print(f"\nname: {activity.name}\n "
                         f"price: ${activity.price:.2f}\n"
                         f"length of time: {activity.length_of_time} hours\n "
-                        f"plan ahead?: {activity.plan_ahead} \n ********************* \n"
+                        f"plan ahead?: {activity.plan_ahead}\n\n********************* \n"
                         )
             else:
                 print("none yet!")
